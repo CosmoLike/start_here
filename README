@@ -1,0 +1,63 @@
+This is a README to get started with CosmoLike, i.e. to run a standard LSST multi-probe likelihood analysis
+
+!!! Replace "teifler" with your username !! and set paths corresponding to your installation
+A) Requirements: 
+ - install fftw3
+	a) goto http://www.fftw.org/download.html
+	b) download v3.3.4, unpack tar file, copy directory to zodiac into your home directory
+	c) goto directory , configure --prefix=/home/teifler --with-pic , make, make install
+- install gsl 2.1
+	a) goto http://www.gnu.org/software/gsl/
+	b) download, unpack tar file, copy directory to zodiac into your home directory 
+	c) goto directory , configure --prefix=/home/teifler , make, make install
+- install python 2.7.8
+	a) goto https://www.python.org/download/
+	b) download v2.7.8 , unpack tar file, copy directory to zodiac into your home directory 
+	c) goto directory , configure --prefix=/home/teifler , make , make install
+- install emcee
+	a) download emcee, http://dan.iel.fm/emcee/current/user/install/ ,
+	b) untar, copy directory to zodiac into your home directory , goto directory
+	c) type: ../Python-2.7.8/python setup.py build
+	d) type: ../Python-2.7.8/python setup.py install
+- install numpy 
+	a) download numpy v 1.8.1 http://sourceforge.net/projects/numpy/files/NumPy/  
+	b) untar, copy directory to zodiac into your home directory , goto directory
+	c) type: ../Python-2.7.8/python setup.py build
+	d) type: ../Python-2.7.8/python setup.py install
+- install yaml 
+	a) download yaml http://pyyaml.org/wiki/PyYAML
+	b) untar, copy directory to zodiac into your home directory , goto directory
+	c) type: ../Python-2.7.8/python setup.py install
+
+If using the JPL SuperComputer:
+- check if gsl lib (libgsl.a, libgsl.la, libgsl.so, etc) files are in ~/lib, if not copy by hand
+- set permanently in cshrc or do at every login
+setenv LD_LIBRARY_PATH /home/teifler/lib
+for bash: export LD_LIBRARY_PATH=/home/teifler/lib
+
+B) Create the shared library, i.e. open Terminal and paste into shell
+gcc -Wall -Wno-missing-braces -Wno-missing-field-initializers -I/home/teifler/include -L/home/teifler/lib -shared -o like_fourier.so -fPIC ../../theory/like_fourier.c -lfftw3 -lgsl -lgslcblas -lm 
+
+C) Submit Job or run locally
+- JPL SC uses PBS, e.g. a command to submit on zodiac reads:
+qsub -S /bin/bash -V -l select=1:ncpus=12:mem=1GB -l place=free -l walltime=48:00:00 -q longq -o /home/teifler/output/ -e /home/teifler/output/ -N LSST_run1 ./runLSST_cosmolike.py > & /nobackup0/sunglass/teifler/myoutput1.log
+
+- locally you can run this by simply typing:
+./runLSST_cosmolike.py
+
+
+
+D) First steps to changing parameters in runLSST_cosmolike.py:
+- initpriors:
+
+- initprobes:
+1) "all_2pt_clusterN_clusterWL" (includes weak lensing, galaxy-galaxy lensing, galaxy clustering, cluster number counts, cluster weak lensing in the analysis)
+2) "shear_shear" (weak lensing only)
+3) "pos_pos" (photometric galaxy clustering only)
+4) "all_2pt" (photometric clustering, galaxy-galaxy lensing, galaxy clustering)
+5) "clusterN_clusterWL" (cluster number counts and cluster weak lensing)
+
+
+
+
+

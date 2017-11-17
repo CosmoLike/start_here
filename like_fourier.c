@@ -8,34 +8,7 @@
 #include <time.h>
 #include <string.h>
 
-#include <gsl/gsl_errno.h>
-#include <gsl/gsl_integration.h>
-#include <gsl/gsl_spline.h>
-#include <gsl/gsl_sf_gamma.h>
-#include <gsl/gsl_sf_legendre.h>
-#include <gsl/gsl_sf_bessel.h>
-#include <gsl/gsl_linalg.h>
-#include <gsl/gsl_matrix.h>
-#include <gsl/gsl_eigen.h>
-#include <gsl/gsl_sf_expint.h>
-#include <gsl/gsl_deriv.h>
-
-
-#include "../../theory/basics.c"
-#include "../../theory/structs.c"
-#include "../../theory/parameters.c"
-#include "../../emu13/emu.c"
-#include "../../theory/recompute.c"
-#include "../../theory/cosmo3D.c"
-#include "../../theory/redshift.c"
-#include "../../theory/halo.c"
-#include "../../theory/HOD.c"
-#include "../../theory/cosmo2D_fourier.c"
-#include "../../theory/IA.c"
-#include "../../theory/cluster.c"
-#include "../../theory/BAO.c"
-#include "../../theory/external_prior.c"
-#include "../../theory/init.c"
+#include "include_cosmolike.c"
 
 
 double C_shear_tomo_sys(double ell,int z1,int z2);
@@ -503,7 +476,7 @@ double log_like_wrapper(input_cosmo_params ic, input_nuisance_params in)
 /* here, do your time-consuming job */
 
   init_cosmo();
-  init_binning_fourier(25,20.0,5000.0,5000.0,10.0,7);
+  init_binning_fourier(25,20.0,5000.0,5000.0,10.0,7,10);
   init_survey("LSST");
   init_galaxies("../../zdistris/zdistribution_LSST","../../zdistris/zdistribution_const_comoving", "gaussian", "gaussian", "redmagic");
   init_clusters();

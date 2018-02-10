@@ -439,7 +439,7 @@ void compute_data_vector(char *details,double OMM, double S8, double NS, double 
   }
   FILE *F;
   char filename[300];
-  sprintf(filename,"datav/%s_%s_%s",survey.name,like.probes,details);
+  sprintf(filename,"datav/%s_%s_%s_new",survey.name,like.probes,details);
   F=fopen(filename,"w");
   for (i=0;i<like.Ndata; i++){  
     fprintf(F,"%d %le\n",i,pred[i]);
@@ -478,13 +478,13 @@ double log_like_wrapper(input_cosmo_params ic, input_nuisance_params in)
   init_cosmo();
   init_binning_fourier(25,20.0,5000.0,5000.0,10.0,7,10);
   init_survey("LSST");
-  init_galaxies("../../zdistris/zdistribution_LSST","../../zdistris/zdistribution_const_comoving", "gaussian", "gaussian", "redmagic");
+  init_galaxies("../cosmolike_core/zdistris/zdistribution_LSST","../cosmolike_core/zdistris/zdistribution_const_comoving", "gaussian", "gaussian", "redmagic");
   init_clusters();
   init_IA("none", "DEEP2");
   init_priors("none","none","PhotoBAO","none");
-  init_probes("shear_shear");
+  init_probes("all_2pt_clusterN_clusterWL");
   init_Pdelta("Halofit",0.8,0.35);
-  compute_data_vector("fid",0.3156,0.831,0.9645,-1.,0.,0.0491685,0.6727,1.35,1.5,1.65,1.8,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.05,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.01,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,5.92,1.1,-0.47,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.72+log(1.e+14*0.7),1.08,0.0,0.25,0.9,0.9,0.9,0.9);
+  compute_data_vector("new",0.3156,0.831,0.9645,-1.,0.,0.0491685,0.6727,1.35,1.5,1.65,1.8,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.05,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.01,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,5.92,1.1,-0.47,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.72+log(1.e+14*0.7),1.08,0.0,0.25,0.9,0.9,0.9,0.9);
 
   //init_data_inv("cov/cov_LSST_2.600000e+01_1.800000e+04_Rmin10_Ncl25_Ntomo10_2pt_clusterN_clusterWL_inv","datav/LSST_all_2pt_clusterN_clusterWL_fid");
   
